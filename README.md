@@ -5,3 +5,6 @@ Context menu gives you a chance to open a new tab directly on the **People** pag
 opening the main company page, waiting for it to load, then clicking on **People**.
 
 This gives the user a quick overview of the company's locations, key employees, and popular _almae matres_.
+
+Upcoming improvements:
+- Limiting context so that the script is only enabled from a job page. It currently does not work from other LI pages.
