@@ -17,8 +17,25 @@ chrome.runtime.onInstalled.addListener(function() {
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-    if (info.menuItemId === "openLinkedInPeople" && info.linkUrl.includes('linkedin.com')) {
-      const newUrl = info.linkUrl.replace(/\/(life.*)?$/, "/people");
-      chrome.tabs.create({ url: newUrl });
+    // Validate the URL before proceeding
+    if (info.menuItemId === "openLinkedInPeople" && isValidLinkedInUrl(info.linkUrl)) {
+        const newUrl = info.linkUrl.replace(/\/(life.*)?$/, "/people");
+        chrome.tabs.create({ url: newUrl });
     }
 });
+
+// Function to check if the URL is a valid LinkedIn domain
+function isValidLinkedInUrl(url) {
+    try {
+        const parsedUrl = new URL(url);
+        const hostname = parsedUrl.hostname;
+        
+        // Check if the hostname is exactly 'linkedin.com' or ends with '.linkedin.com'
+        if (hostname === "linkedin.com" || hostname.endsWith(".linkedin.com")) {
+            return true;
+        }
+    } catch (error) {
+        console.error("Error parsing URL: ", error);
+    }
+    return false;
+}
