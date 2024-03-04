@@ -20,7 +20,13 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     // Validate the URL before proceeding
     if (info.menuItemId === "openLinkedInPeople" && isValidLinkedInUrl(info.linkUrl)) {
         const newUrl = info.linkUrl.replace(/\/(life.*)?$/, "/people");
-        chrome.tabs.create({ url: newUrl });
+        // OLD: chrome.tabs.create({ url: newUrl });
+
+        // Calculate the position for the new tab
+        const newIndex = tab.index + 1;
+
+        // Open a new tab directly to the right of the current tab
+        chrome.tabs.create({ url: newUrl, index: newIndex });
     }
 });
 
