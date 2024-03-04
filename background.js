@@ -17,18 +17,22 @@ chrome.runtime.onInstalled.addListener(function() {
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-    // Validate the URL before proceeding
     if (info.menuItemId === "openLinkedInPeople" && isValidLinkedInUrl(info.linkUrl)) {
         const newUrl = info.linkUrl.replace(/\/(life.*)?$/, "/people");
-        // OLD: chrome.tabs.create({ url: newUrl });
-
+        
         // Calculate the position for the new tab
         const newIndex = tab.index + 1;
 
-        // Open a new tab directly to the right of the current tab
-        chrome.tabs.create({ url: newUrl, index: newIndex });
+        chrome.tabs.create({ url: newUrl, index: newIndex }, newTab => {
+            // Check if the original tab is part of a group
+            if (tab.groupId !== -1) {
+                // Add the new tab to the same group as the originating tab
+                chrome.tabs.group({ groupId: tab.groupId, tabIds: newTab.id });
+            }
+        });
     }
 });
+
 
 // Function to check if the URL is a valid LinkedIn domain
 function isValidLinkedInUrl(url) {
