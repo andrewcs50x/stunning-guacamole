@@ -10,4 +10,4 @@ TO DO:
 - [x] ~~Extension version numbering (Chrome)~~ - v.1.0.1
 - [ ] Limit context so that the script is only enabled from a job page. It currently does not work as intended if invoked from other LI pages.
 
-Designed using OpenAI ChatGPT-4, Feb 2024.
+Designed using OpenAI GPT-4, Feb 2024.
